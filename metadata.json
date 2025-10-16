@@ -1,0 +1,7 @@
+{
+  "name": "JLPT-N5 Adventure Board V 1.7 ",
+  "description": "A gamified Japanese learning platform to master JLPT N5-N3 levels. Features an interactive board game path, mini-quizzes, and an AI-powered tutor using Google Gemini.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
