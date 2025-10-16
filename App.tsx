@@ -28,7 +28,7 @@ import { Lesson } from './types';
 type MainView = 'board' | 'flashcards' | 'certificates' | 'certificate';
 
 const AppContent: React.FC = () => {
-  const { isAuthenticated, userProgress, completeLesson } = useUser();
+  const { isAuthenticated, completeLesson } = useUser();
   
   const [selectedLesson, setSelectedLesson] = useState<Lesson | null>(null);
   const [currentView, setCurrentView] = useState<MainView>('board');
@@ -71,6 +71,7 @@ const AppContent: React.FC = () => {
         if (certificateLevel) {
           return <CertificatePage level={certificateLevel} onBack={handleBackFromCertificate} />;
         }
+        // Fallback if level is not set
         setCurrentView('board');
         return null;
 
@@ -93,9 +94,7 @@ const AppContent: React.FC = () => {
         }
         return (
           <Board 
-            lessons={LESSONS} 
             onSelectLesson={handleSelectLesson} 
-            completedLessons={userProgress.completedLessons}
             onGenerateCertificate={handleGenerateCertificate}
           />
         );

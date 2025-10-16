@@ -5,7 +5,6 @@ import { BookOpenIcon, RectangleStackIcon, CertificateIcon, PencilIcon } from '.
 
 interface SidebarProps {
   onEditProfile: () => void;
-  onReset?: () => void; // Made optional as it will come from context
   currentView: 'board' | 'flashcards' | 'certificates' | 'certificate';
   onNavigate: (view: 'board' | 'flashcards' | 'certificates') => void;
 }
