@@ -1,19 +1,19 @@
 import React from 'react';
-import { LESSONS } from '../../lessons';
 import { useUser } from '../../contexts/UserContext';
 import { Lesson } from '../../types';
 import BoardTile from '../features/lessons/BoardTile';
 import { TrophyIcon } from '../common/Icons';
 
 interface BoardProps {
+  lessons: Lesson[];
   onSelectLesson: (lesson: Lesson) => void;
   onGenerateCertificate: (level: 'N5' | 'N4' | 'N3') => void;
 }
 
-const Board: React.FC<BoardProps> = ({ onSelectLesson, onGenerateCertificate }) => {
+const Board: React.FC<BoardProps> = ({ lessons, onSelectLesson, onGenerateCertificate }) => {
   const { userProgress } = useUser();
   const { completedLessons } = userProgress;
-  const lessons = LESSONS;
+  
   const levels: ('N5' | 'N4' | 'N3')[] = ['N5', 'N4', 'N3'];
 
   return (

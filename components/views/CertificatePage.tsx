@@ -8,6 +8,8 @@ interface CertificatePageProps {
   onBack: () => void;
 }
 
+// A simple SVG for a Japanese 'hanko' stamp.
+// It will contain the characters for "認定" (nintei - certified).
 const HankoStamp: React.FC = () => (
     <div className="w-20 h-20 flex items-center justify-center">
         <svg viewBox="0 0 100 100" className="w-full h-full">

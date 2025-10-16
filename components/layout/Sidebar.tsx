@@ -13,7 +13,7 @@ const navButtonBase = "w-full flex items-center gap-3 text-left py-2.5 px-4 roun
 const navButtonActive = "bg-red-500 text-white";
 const navButtonInactive = "text-slate-600 hover:bg-slate-100";
 
-const Sidebar: React.FC<SidebarProps> = ({ onEditProfile, onNavigate, currentView }) => {
+const Sidebar: React.FC<SidebarProps> = ({ onEditProfile, currentView, onNavigate }) => {
   const { userProgress, userProfile, isAdmin, resetProgress } = useUser();
 
   const xpForNextLevel = userProgress.level * 250;

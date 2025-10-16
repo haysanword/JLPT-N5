@@ -1,28 +1,17 @@
 import React, { useState } from 'react';
-
-// Context
 import { UserProvider, useUser } from './contexts/UserContext';
-
-// Views
+import { LESSONS } from './lessons'; // Import LESSONS here
 import Board from './components/views/Board';
 import LessonView from './components/views/LessonView';
 import FlashcardView from './components/views/FlashcardView';
 import CertificatePage from './components/views/CertificatePage';
 import CertificateGallery from './components/views/CertificateGallery';
 import WelcomeScreen from './components/views/WelcomeScreen';
-
-// Layout
 import Header from './components/layout/Header';
 import Sidebar from './components/layout/Sidebar';
-
-// Features
 import ChatFab from './components/features/chat/ChatFab';
 import ProfileEditModal from './components/features/profile/ProfileEditModal';
-
-// Types
 import { Lesson } from './types';
-
-// ---------------------------------------------------------------------
 
 type MainView = 'board' | 'flashcards' | 'certificates' | 'certificate';
 
@@ -35,7 +24,6 @@ const AppContent: React.FC = () => {
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const [certificateLevel, setCertificateLevel] = useState<'N5' | 'N4' | 'N3' | null>(null);
 
-  // --- Lesson Handlers ---
   const handleSelectLesson = (lesson: Lesson) => setSelectedLesson(lesson);
   const handleCloseLesson = () => setSelectedLesson(null);
 
@@ -44,7 +32,6 @@ const AppContent: React.FC = () => {
     setSelectedLesson(null);
   };
 
-  // --- Navigation Handlers ---
   const handleNavigate = (view: 'board' | 'flashcards' | 'certificates') => {
     setSelectedLesson(null);
     setCertificateLevel(null);
@@ -62,7 +49,6 @@ const AppContent: React.FC = () => {
     setCertificateLevel(null);
   };
 
-  // --- Render Views ---
   const renderMainContent = () => {
     switch (currentView) {
       case 'certificate':
@@ -73,7 +59,7 @@ const AppContent: React.FC = () => {
         );
 
       case 'certificates':
-        return <CertificateGallery onSelectCertificate={handleGenerateCertificate} />;
+        return <CertificateGallery lessons={LESSONS} onSelectCertificate={handleGenerateCertificate} />;
 
       case 'flashcards':
         return <FlashcardView />;
@@ -88,6 +74,7 @@ const AppContent: React.FC = () => {
           />
         ) : (
           <Board
+            lessons={LESSONS}
             onSelectLesson={handleSelectLesson}
             onGenerateCertificate={handleGenerateCertificate}
           />
@@ -95,18 +82,15 @@ const AppContent: React.FC = () => {
     }
   };
 
-  // --- Authentication ---
   if (!isAuthenticated) {
     return <WelcomeScreen />;
   }
 
-  // --- Main Layout ---
   return (
     <div className="bg-slate-50 min-h-screen font-sans">
       <Header />
       <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 px-4 sm:px-0">
-          {/* Sidebar */}
           <div className="lg:col-span-3">
             <Sidebar
               onEditProfile={() => setIsProfileModalOpen(true)}
@@ -114,16 +98,12 @@ const AppContent: React.FC = () => {
               onNavigate={handleNavigate}
             />
           </div>
-
-          {/* Main Content */}
           <div className="lg:col-span-9">{renderMainContent()}</div>
         </div>
       </main>
 
-      {/* Floating Chat */}
       <ChatFab />
 
-      {/* Profile Edit Modal */}
       <ProfileEditModal
         isOpen={isProfileModalOpen}
         onClose={() => setIsProfileModalOpen(false)}
@@ -131,8 +111,6 @@ const AppContent: React.FC = () => {
     </div>
   );
 };
-
-// ---------------------------------------------------------------------
 
 const App: React.FC = () => (
   <UserProvider>

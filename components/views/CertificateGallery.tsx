@@ -1,11 +1,11 @@
 import React from 'react';
-import { Lesson } from '../../types';
 import { useUser } from '../../contexts/UserContext';
 import { CertificateIcon, LockIcon } from '../common/Icons';
+import { Lesson } from '../../types';
 
 interface CertificateGalleryProps {
+  lessons: Lesson[];
   onSelectCertificate: (level: 'N5' | 'N4' | 'N3') => void;
-  lessons?: Lesson[]; // Made optional, as it will come from context if not provided
 }
 
 interface CertificateCardProps {
@@ -39,7 +39,7 @@ const CertificateCard: React.FC<CertificateCardProps> = ({ level, isComplete, le
                     <div className="w-full bg-slate-200 rounded-full h-2 mt-4">
                         <div 
                             className="bg-red-500 h-2 rounded-full"
-                            style={{ width: `${(completedInLevel / lessonsInLevel) * 100}%` }}
+                            style={{ width: `${lessonsInLevel > 0 ? (completedInLevel / lessonsInLevel) * 100 : 0}%` }}
                         ></div>
                     </div>
                     <p className="text-xs text-slate-400 mt-1">{completedInLevel} / {lessonsInLevel} pelajaran selesai</p>
@@ -49,13 +49,10 @@ const CertificateCard: React.FC<CertificateCardProps> = ({ level, isComplete, le
     );
 };
 
-import { LESSONS } from '../../lessons';
-
-const CertificateGallery: React.FC<CertificateGalleryProps> = ({ onSelectCertificate }) => {
+const CertificateGallery: React.FC<CertificateGalleryProps> = ({ lessons, onSelectCertificate }) => {
     const { userProgress } = useUser();
     const { completedLessons } = userProgress;
-    const lessons = LESSONS; // Get lessons from global import
-
+    
     const levels: ('N5' | 'N4' | 'N3')[] = ['N5', 'N4', 'N3'];
 
     const checkLevelCompletion = (level: 'N5' | 'N4' | 'N3') => {
